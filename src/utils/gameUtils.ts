@@ -67,7 +67,7 @@ export const getCurrentMap = (
   return as.reduce((a, v) => {
     const positions = keyToIndexes(as)(v);
     const adjacentLetters = positions.map((p) => {
-      const adj = getAdj(p).map((n) => as[n]!);
+      const adj = getAdj(p).map((n) => as[n] ?? "");
       return [p, adj] as Instance;
     });
     a[v] = adjacentLetters;
@@ -111,31 +111,32 @@ export const makeFindPath = (
     visited: Set<number>,
     start?: Instance[]
   ): Set<number> | undefined {
-    if (!start)
-      return findPath(
-        wordArr.slice(1),
-        matches,
-        visited,
-        tileMap[wordArr[0]!]!
-      );
-    if (wordArr.length === 0 && start.length > 0)
-      return matches.add(start[0]![0]);
+    if (start == null) {
+      return wordArr[0] == null
+        ? undefined
+        : findPath(wordArr.slice(1), matches, visited, tileMap[wordArr[0]]);
+    }
+
+    if (wordArr[0] == null && start[0] != null) return matches.add(start[0][0]);
 
     const filtered = start
       .filter(
         ([pos, adj]) =>
-          adj.includes(wordArr[0]!) && !matches.has(pos) && !visited.has(pos)
+          adj.includes(wordArr[0] ?? "") &&
+          !matches.has(pos) &&
+          !visited.has(pos)
       )
-      .map(([p, _]) => p);
+      .map(([p]) => p);
 
     for (const tile of filtered) {
       visited.add(tile);
-      const neighbors = tileMap[wordArr[0]!]?.filter(([i, _]) => {
-        if (matches.has(i) || visited.has(i)) return false;
-        return getAdj(i).includes(tile);
-      });
+      const neighbors =
+        tileMap[wordArr[0] ?? ""]?.filter(([i]) => {
+          if (matches.has(i) || visited.has(i)) return false;
+          return getAdj(i).includes(tile);
+        }) ?? [];
 
-      for (const neighbor of neighbors!) {
+      for (const neighbor of neighbors) {
         const foundMatches = findPath(wordArr.slice(1), matches, visited, [
           neighbor,
         ]);
@@ -159,7 +160,7 @@ export const makeFindPath = (
 const CWMap = [12, 8, 4, 0, 13, 9, 5, 1, 14, 10, 6, 2, 15, 11, 7, 3];
 const CCWMap = [3, 7, 11, 15, 2, 6, 10, 14, 1, 5, 9, 13, 0, 4, 8, 12];
 export const rotateGameTiles = (as: string[], dir: "cw" | "ccw"): string[] => {
-  if (dir === "cw") return CWMap.map((x) => as[x]!);
+  if (dir === "cw") return CWMap.map((x) => as[x] ?? "");
 
-  return CCWMap.map((x) => as[x]!);
+  return CCWMap.map((x) => as[x] ?? "");
 };
