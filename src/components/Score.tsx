@@ -1,8 +1,6 @@
 import useStore from "../utils/store";
 
-type Props = {};
-
-const Score = ({}: Props) => {
+const Score = () => {
   const x = useStore().game.score;
   return (
     <div>

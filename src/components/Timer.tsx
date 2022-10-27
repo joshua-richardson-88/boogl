@@ -19,7 +19,7 @@ const Timer = ({ maxTime }: Props) => {
     }
     const timer = setInterval(() => setT((p) => p - 1), 1000);
     return () => clearInterval(timer);
-  }, [t, isGameStarted]);
+  }, [endGame, isGameStarted, maxTime, t]);
 
   return (
     <div>

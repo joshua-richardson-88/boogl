@@ -1,8 +1,6 @@
 import useStore from "../utils/store";
 
-type Props = {};
-
-const WordList = ({}: Props) => {
+const WordList = () => {
   const list = useStore().game.wordList;
   return (
     <div className="h-40 select-none">

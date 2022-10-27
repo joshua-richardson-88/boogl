@@ -1,7 +1,6 @@
 import useStore from "../utils/store";
 
-type Props = {};
-const NewGameButton = ({}: Props) => {
+const NewGameButton = () => {
   const isGameStarted = useStore().gameStarted;
   const startGame = useStore().startGame;
 

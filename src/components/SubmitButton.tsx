@@ -1,18 +1,16 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 
 import { tilesToWord } from "../utils/gameUtils";
 import useStore from "../utils/store";
 import { trpc } from "../utils/trpc";
 import useKeyPress from "../utils/useKeyPress";
 
-type Props = {};
-const SubmitButton = ({}: Props) => {
+const SubmitButton = () => {
   const submitKey = useKeyPress("Enter");
 
   const list = useStore().game.wordList;
   const currentWord = useStore().game.currentWord;
   const tiles = useStore().gameBoard.tiles;
-  const url = useStore().validationUrl;
 
   const clear = useStore().clearWord;
   const addWord = useStore().addWordToList;
@@ -42,10 +40,18 @@ const SubmitButton = ({}: Props) => {
     }
 
     mutate(word);
-  }, [currentWord, tiles, list]);
+  }, [
+    clear,
+    currentWord,
+    list,
+    mutate,
+    tiles,
+    toggleAlreadyUsed,
+    toggleIncorrect,
+  ]);
   useEffect(() => {
     if (submitKey) handleSubmit();
-  }, [submitKey]);
+  }, [handleSubmit, submitKey]);
 
   return (
     <button
