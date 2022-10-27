@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 
 import { tilesToWord } from "../utils/gameUtils";
 import useStore from "../utils/store";
@@ -27,7 +27,7 @@ const SubmitButton = () => {
     },
   });
 
-  const handleSubmit = useCallback(async () => {
+  const handleSubmit = () => {
     const word = tilesToWord(currentWord, tiles);
     const wordTooShort = currentWord.length < 3;
     const alreadyUsed = list.includes(word);
@@ -40,15 +40,8 @@ const SubmitButton = () => {
     }
 
     mutate(word);
-  }, [
-    clear,
-    currentWord,
-    list,
-    mutate,
-    tiles,
-    toggleAlreadyUsed,
-    toggleIncorrect,
-  ]);
+  };
+
   useEffect(() => {
     if (submitKey) handleSubmit();
   }, [handleSubmit, submitKey]);
