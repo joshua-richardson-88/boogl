@@ -45,9 +45,9 @@ const Game = () => {
   );
 
   useEffect(() => {
-    setAdjacentCurrent(
-      makeGetAdjacent(cols, rows)(currentWord[currentWord.length - 1]!)
-    );
+    const word = currentWord[currentWord.length - 1];
+
+    if (word != null) setAdjacentCurrent(makeGetAdjacent(cols, rows)(word));
   }, [currentWord, cols, rows, tiles]);
 
   useEffect(() => {
@@ -58,13 +58,15 @@ const Game = () => {
 
       if (!tiles.includes(key)) return;
       if (currentWord.length === 0) {
-        const pos = keyToIndexes(key)[0]!;
+        const pos = keyToIndexes(key)[0];
+        if (pos == null) return;
+
         addLetter(pos);
         setAdjacentCurrent(getAdj(pos));
         return;
       }
       const _path = findPath(
-        [...currentWord.map((i) => tiles[i]!), key],
+        [...currentWord.map((i) => tiles[i] ?? ""), key],
         new Set(),
         new Set()
       );
@@ -73,11 +75,22 @@ const Game = () => {
       const path = [..._path.values()].reverse();
       clearWord();
       path.forEach((l) => addLetter(l));
-      setAdjacentCurrent(getAdj(path[path.length - 1]!));
+      const endOfWord = path[path.length - 1];
+      if (endOfWord != null) setAdjacentCurrent(getAdj(endOfWord));
     };
     window.addEventListener("keydown", keyDownHandler);
     return () => window.removeEventListener("keydown", keyDownHandler);
-  }, [gameStarted, tileMap, tiles, currentWord]);
+  }, [
+    addLetter,
+    clearWord,
+    findPath,
+    gameStarted,
+    getAdj,
+    keyToIndexes,
+    tileMap,
+    tiles,
+    currentWord,
+  ]);
 
   return (
     <div className="grid grid-cols-4 grid-rows-4 gap-2">
