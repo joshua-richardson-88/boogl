@@ -6,8 +6,6 @@ import { trpc } from "../utils/trpc";
 import useKeyPress from "../utils/useKeyPress";
 
 const SubmitButton = () => {
-  const submitKey = useKeyPress("Enter");
-
   const list = useStore().game.wordList;
   const currentWord = useStore().game.currentWord;
   const tiles = useStore().gameBoard.tiles;
@@ -53,11 +51,7 @@ const SubmitButton = () => {
     console.log("6");
   };
 
-  useEffect(() => {
-    console.log("7");
-
-    if (submitKey) handleSubmit();
-  }, [handleSubmit, submitKey]);
+  useKeyPress("Enter", handleSubmit);
 
   return (
     <button

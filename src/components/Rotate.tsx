@@ -1,18 +1,12 @@
-import { useEffect } from "react";
-
 import useStore from "../utils/store";
 import useKeyPress from "../utils/useKeyPress";
 
 const Rotate = () => {
-  const arrowLeftPressed = useKeyPress("ArrowLeft");
-  const arrowRightPressed = useKeyPress("ArrowRight");
-
   const rotate = useStore().rotateTiles;
 
-  useEffect(() => {
-    if (arrowLeftPressed) rotate("ccw");
-    if (arrowRightPressed) rotate("cw");
-  }, [arrowLeftPressed, arrowRightPressed, rotate]);
+  const arrowLeftPressed = useKeyPress("ArrowLeft", () => rotate("ccw"));
+  const arrowRightPressed = useKeyPress("ArrowRight", () => rotate("cw"));
+
   return (
     <div className="flex flex-col gap-2 sm:flex-row">
       <button

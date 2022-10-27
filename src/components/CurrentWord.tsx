@@ -1,13 +1,8 @@
-import { useEffect } from "react";
-
 import { tilesToWord } from "../utils/gameUtils";
 import useStore from "../utils/store";
 import useKeyPress from "../utils/useKeyPress";
 
 const CurrentWord = () => {
-  const backspaceKey = useKeyPress("Backspace");
-  const deleteKey = useKeyPress("Delete");
-
   const word = useStore().game.currentWord;
   const tiles = useStore().gameBoard.tiles;
   const wasIncorrect = useStore().wasIncorrectWord;
@@ -23,10 +18,8 @@ const CurrentWord = () => {
       toggleAlreadyFound(false);
     }, 500);
   };
-
-  useEffect(() => {
-    if (backspaceKey || deleteKey) removeLetter();
-  }, [backspaceKey, deleteKey, removeLetter]);
+  useKeyPress("Backspace", removeLetter);
+  useKeyPress("Delete", removeLetter);
 
   return (
     <h2
