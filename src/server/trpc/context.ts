@@ -12,7 +12,7 @@ type CreateContextOptions = Record<string, never>;
  * - trpc's `createSSGHelpers` where we don't have req/res
  **/
 export const createContextInner = async (opts: CreateContextOptions) => {
-  return {};
+  return opts;
 };
 
 /**
@@ -20,7 +20,7 @@ export const createContextInner = async (opts: CreateContextOptions) => {
  * @link https://trpc.io/docs/context
  **/
 export const createContext = async (
-  opts: trpcNext.CreateNextContextOptions,
+  opts: trpcNext.CreateNextContextOptions
 ) => {
   return await createContextInner({});
 };
