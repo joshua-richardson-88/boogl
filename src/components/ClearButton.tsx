@@ -1,7 +1,6 @@
 import useStore from "../utils/store";
 
-type Props = {};
-const ClearButton = ({}: Props) => {
+const ClearButton = () => {
   const clearCurrent = useStore().clearWord;
 
   return (

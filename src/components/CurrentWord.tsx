@@ -4,8 +4,7 @@ import { tilesToWord } from "../utils/gameUtils";
 import useStore from "../utils/store";
 import useKeyPress from "../utils/useKeyPress";
 
-type Props = {};
-const CurrentWord = ({}: Props) => {
+const CurrentWord = () => {
   const backspaceKey = useKeyPress("Backspace");
   const deleteKey = useKeyPress("Delete");
 

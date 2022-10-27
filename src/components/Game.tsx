@@ -7,8 +7,7 @@ import useStore from "../utils/store";
 const keyIsLetter = (s: string) =>
   s.length === 1 && s.toLowerCase().match(/[a-z]/);
 
-type Props = {};
-const Game = ({}: Props) => {
+const Game = () => {
   const [adjacentHover, setAdjacentHover] = useState<number[]>([]);
   const [adjacentCurrent, setAdjacentCurrent] = useState<number[]>([]);
 
