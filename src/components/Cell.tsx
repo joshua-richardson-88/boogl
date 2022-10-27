@@ -39,7 +39,7 @@ const Cell = ({ adjCurrent, adjHover, letter, position, update }: Props) => {
     } else {
       setAdjacent([]);
     }
-  }, [gameStarted, currentWord, position]);
+  }, [currentWord, gameStarted, getAdj, position]);
 
   const selectTile = () => {
     if (
@@ -56,49 +56,65 @@ const Cell = ({ adjCurrent, adjHover, letter, position, update }: Props) => {
       {/* top-left */}
       <div
         className={`absolute left-1 -top-3 h-1 w-1/2 -translate-x-full rotate-45 ${
-          adjacent[0]! > 0 ? "bg-green-600 shadow-md shadow-green-400" : ""
+          adjacent[0] != null && adjacent[0] > 0
+            ? "bg-green-600 shadow-md shadow-green-400"
+            : ""
         }`}
       />
       {/* top */}
       <div
         className={`absolute left-0 -top-3 h-1 w-1/2 translate-x-1/2 rotate-90 ${
-          adjacent[1]! > 0 ? "bg-green-600 shadow-md shadow-green-400" : ""
+          adjacent[1] != null && adjacent[1] > 0
+            ? "bg-green-600 shadow-md shadow-green-400"
+            : ""
         }`}
       />
       {/* top-right */}
       <div
         className={`absolute right-1 -top-3 h-1 w-1/2 translate-x-full -rotate-45 ${
-          adjacent[2]! > 0 ? "bg-green-600 shadow-md shadow-green-400" : ""
+          adjacent[2] != null && adjacent[2] > 0
+            ? "bg-green-600 shadow-md shadow-green-400"
+            : ""
         }`}
       />
       {/* left */}
       <div
         className={`absolute right-full top-1/2 h-1 w-1/2  ${
-          adjacent[3]! > 0 ? "bg-green-600 shadow-md shadow-green-400" : ""
+          adjacent[3] != null && adjacent[3] > 0
+            ? "bg-green-600 shadow-md shadow-green-400"
+            : ""
         }`}
       />
       {/* right */}
       <div
         className={`absolute left-full top-1/2 h-1 w-1/2  ${
-          adjacent[4]! > 0 ? "bg-green-600 shadow-md shadow-green-400" : ""
+          adjacent[4] != null && adjacent[4] > 0
+            ? "bg-green-600 shadow-md shadow-green-400"
+            : ""
         }`}
       />
       {/* bottom-left */}
       <div
         className={`absolute left-1 -bottom-3 h-1 w-1/2 -translate-x-full -rotate-45 ${
-          adjacent[5]! > 0 ? "bg-green-600 shadow-md shadow-green-400" : ""
+          adjacent[5] != null && adjacent[5] > 0
+            ? "bg-green-600 shadow-md shadow-green-400"
+            : ""
         }`}
       />
       {/* bottom */}
       <div
         className={`absolute left-0 -bottom-3 h-1 w-1/2 translate-x-1/2 rotate-90 ${
-          adjacent[6]! > 0 ? "bg-green-600 shadow-md shadow-green-400" : ""
+          adjacent[6] != null && adjacent[6] > 0
+            ? "bg-green-600 shadow-md shadow-green-400"
+            : ""
         }`}
       />
       {/* bottom-right */}
       <div
         className={`absolute right-1 -bottom-3 h-1 w-1/2 translate-x-full rotate-45 ${
-          adjacent[7]! > 0 ? "bg-green-600 shadow-md shadow-green-400" : ""
+          adjacent[7] != null && adjacent[7] > 0
+            ? "bg-green-600 shadow-md shadow-green-400"
+            : ""
         }`}
       />
 
