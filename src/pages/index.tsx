@@ -14,14 +14,14 @@ import {
 const Home: NextPage = () => (
   <>
     <Head>
-      <title>Bond Interview</title>
+      <title>Boogl</title>
       <meta name="description" content="Interview Coding Sample" />
       <link rel="icon" href="/favicon.ico" />
     </Head>
 
     <main className="container mx-auto flex min-h-screen items-center justify-center gap-4 p-4 text-neutral-100">
       <div className="flex max-w-sm flex-1 flex-col gap-6">
-        <h1 className="text-center text-5xl">Boggle!</h1>
+        <h1 className="text-center text-5xl">Boogl</h1>
 
         <NewGameButton />
         <CurrentWord />
