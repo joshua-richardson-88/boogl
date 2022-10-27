@@ -116,7 +116,6 @@ const useStore = create<Store>((set) => ({
     });
   },
   clearWord: () => {
-    console.log("clear word triggered");
     set((state) => ({
       ...state,
       game: {

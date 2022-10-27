@@ -19,30 +19,43 @@ const SubmitButton = () => {
 
   const { isLoading, mutate } = trpc.word.isValidWord.useMutation({
     onSuccess: (isValid) => {
-      if (isValid) addWord();
-      else {
+      console.log("8");
+      if (isValid) {
+        addWord();
+        console.log("9");
+      } else {
+        console.log("10");
         clear();
         toggleIncorrect(true);
+        console.log("11");
       }
     },
   });
 
   const handleSubmit = () => {
+    console.log("1");
     const word = tilesToWord(currentWord, tiles);
     const wordTooShort = currentWord.length < 3;
     const alreadyUsed = list.includes(word);
+    console.log("2");
 
     if (wordTooShort || alreadyUsed) {
+      console.log("3");
       clear();
+      console.log("4");
       if (alreadyUsed) toggleAlreadyUsed(true);
       if (wordTooShort) toggleIncorrect(true);
       return;
     }
 
+    console.log("5");
     mutate(word);
+    console.log("6");
   };
 
   useEffect(() => {
+    console.log("7");
+
     if (submitKey) handleSubmit();
   }, [handleSubmit, submitKey]);
 
