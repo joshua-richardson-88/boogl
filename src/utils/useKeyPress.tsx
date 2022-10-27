@@ -5,7 +5,6 @@ const useKeyPress = (targetKey: string) => {
 
   useEffect(() => {
     const downHandler = (e: KeyboardEvent) => {
-      console.log("key: ", e.key);
       if (e.key === targetKey) setKeyPressed(true);
     };
     const upHandler = (e: KeyboardEvent) => {
