@@ -28,13 +28,15 @@ const Game = () => {
 
   const updateAdjacent = useCallback(
     (n?: number) => {
-      const getAdj = makeGetAdjacent(cols, rows);
-      setAdjacentHover(n == null ? [] : getAdj(n));
-      if (n != null) {
-        setAdjacentCurrent(
-          getAdj(currentWord[currentWord.length - 1] as number)
-        );
+      if (currentWord.length === 0 || n == null) {
+        setAdjacentCurrent([]);
+        setAdjacentHover([]);
+        return;
       }
+
+      const getAdj = makeGetAdjacent(cols, rows);
+      setAdjacentHover(getAdj(n));
+      setAdjacentCurrent(getAdj(currentWord[currentWord.length - 1] ?? -10));
     },
     [cols, rows, currentWord]
   );
@@ -47,7 +49,7 @@ const Game = () => {
   useEffect(() => {
     const word = currentWord[currentWord.length - 1];
 
-    if (word != null) setAdjacentCurrent(makeGetAdjacent(cols, rows)(word));
+    setAdjacentCurrent(word == null ? [] : makeGetAdjacent(cols, rows)(word));
   }, [currentWord, cols, rows, tiles]);
 
   useEffect(() => {
