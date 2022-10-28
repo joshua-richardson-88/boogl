@@ -86,9 +86,15 @@ const useStore = create<Store>((set) => ({
     });
   },
   endGame: () => {
+    console.log("end game called");
     set((state) => ({
       ...state,
       gameStarted: false,
+      gameBoard: {
+        ...state.gameBoard,
+        tiles: Array(GAME_COLS * GAME_ROWS).fill(""),
+        tileMap: {},
+      },
     }));
   },
   updateGameBoardSize: (r, c) => {

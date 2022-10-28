@@ -7,16 +7,19 @@ const GameButton = () => {
   const endGame = useStore().endGame;
 
   const handleClick = () => {
-    if (isGameStarted) endGame();
-    else startGame();
+    console.log("clicked");
+    if (isGameStarted) {
+      endGame();
+    } else {
+      startGame();
+    }
   };
 
   return (
     <button
       className={`${
         isGameStarted ? "" : "animate-pulse "
-      }rounded w-16 bg-green-700`}
-      disabled={isGameStarted}
+      }rounded w-16 bg-green-700 hover:bg-green-600 active:bg-green-600`}
       onClick={handleClick}
     >
       {isGameStarted ? "End" : "Start"}
@@ -40,7 +43,10 @@ const Timer = ({ maxTime }: TimerProps) => {
   const endGame = useStore().endGame;
 
   useEffect(() => {
-    if (!isGameStarted) return;
+    if (!isGameStarted) {
+      if (t > -1) setT(-1);
+      return;
+    }
     if (isGameStarted && t === -1) setT(maxTime);
     if (t === 0) {
       endGame();
