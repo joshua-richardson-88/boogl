@@ -14,7 +14,7 @@ import {
 
 const Home: NextPage = () => {
   useEffect(() => {
-    const touchHandler = (e: TouchEvent) => console.log(e);
+    const touchHandler = (e: TouchEvent) => console.log(e, e.currentTarget);
     window.addEventListener("touchstart", touchHandler);
     window.addEventListener("touchmove", touchHandler);
 
