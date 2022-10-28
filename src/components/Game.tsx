@@ -8,7 +8,6 @@ const keyIsLetter = (s: string) =>
   s.length === 1 && s.toLowerCase().match(/[a-z]/);
 
 const GameBoard = () => {
-  const [adjacentHover, setAdjacentHover] = useState<number[]>([]);
   const [adjacentCurrent, setAdjacentCurrent] = useState<number[]>([]);
 
   const gameStarted = useStore().gameStarted;
@@ -30,12 +29,10 @@ const GameBoard = () => {
     (n?: number) => {
       if (currentWord.length === 0 || n == null) {
         setAdjacentCurrent([]);
-        setAdjacentHover([]);
         return;
       }
 
       const getAdj = makeGetAdjacent(cols, rows);
-      setAdjacentHover(getAdj(n));
       setAdjacentCurrent(getAdj(currentWord[currentWord.length - 1] ?? -10));
     },
     [cols, rows, currentWord]
@@ -102,7 +99,6 @@ const GameBoard = () => {
           letter={d}
           position={i}
           adjCurrent={adjacentCurrent.includes(i)}
-          adjHover={adjacentHover.includes(i)}
           update={updateAdjacent}
         />
       ))}

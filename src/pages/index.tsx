@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { CurrentWord, Game, WordList, TopAside } from "../components";
 import useStore from "../utils/store";
@@ -14,36 +14,39 @@ const debounce = (f: any, x: number) => {
 };
 
 const Home: NextPage = () => {
+  const [pressed, setPressed] = useState(false);
   const update = useStore().updateTouchPosition;
   const debounceHandler = useCallback(
-    (e: TouchEvent) => {
-      e.preventDefault();
-      debounce(
-        update({
-          x: e.touches[0]?.pageX ?? null,
-          y: e.touches[0]?.pageY ?? null,
-        }),
-        100
-      );
+    (e: PointerEvent) => {
+      if (pressed) {
+        debounce(
+          update({
+            x: e.pageX,
+            y: e.pageY,
+          }),
+          200
+        );
+      }
     },
-    [update]
+    [pressed, update]
   );
   useEffect(() => {
-    // const touchHandler = (e: TouchEvent) => {
-    //   update({
-    //     x: e.touches[0]?.pageX ?? null,
-    //     y: e.touches[0]?.pageY ?? null,
-    //   });
-    // };
-    const finishHandler = (e: TouchEvent) => update({ x: null, y: null });
+    const startHandler = (e: PointerEvent) => {
+      setPressed(true);
+      debounceHandler(e);
+    };
+    const finishHandler = (e: PointerEvent) => {
+      setPressed(false);
+      update({ x: null, y: null });
+    };
 
-    window.addEventListener("touchstart", debounceHandler);
-    window.addEventListener("touchmove", debounceHandler);
-    window.addEventListener("touchend", finishHandler);
+    window.addEventListener("pointerdown", startHandler, { passive: false });
+    window.addEventListener("pointermove", debounceHandler, { passive: false });
+    window.addEventListener("pointerup", finishHandler, { passive: false });
     return () => {
-      window.removeEventListener("touchstart", debounceHandler);
-      window.removeEventListener("touchmove", debounceHandler);
-      window.removeEventListener("touchend", finishHandler);
+      window.removeEventListener("pointerdown", debounceHandler);
+      window.removeEventListener("pointermove", debounceHandler);
+      window.removeEventListener("pointerup", finishHandler);
     };
   }, [debounceHandler, update]);
 

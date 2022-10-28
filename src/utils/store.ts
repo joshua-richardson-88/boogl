@@ -96,7 +96,6 @@ const useStore = create<Store>((set) => ({
     });
   },
   endGame: () => {
-    console.log("end game called");
     set((state) => ({
       ...state,
       gameStarted: false,
@@ -155,7 +154,9 @@ const useStore = create<Store>((set) => ({
       ...state,
       game: {
         ...state.game,
-        currentWord: state.game.currentWord.slice(i, e),
+        currentWord: state.game.currentWord.filter((_, x) => {
+          return x < i ? true : e != null && x >= e ? true : false;
+        }),
       },
     }));
   },

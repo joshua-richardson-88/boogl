@@ -6,12 +6,11 @@ import usePrevious from "../utils/usePrevious";
 
 type Props = {
   adjCurrent: boolean;
-  adjHover: boolean;
   letter: string;
   position: number;
   update: (n?: number) => void;
 };
-const Cell = ({ adjCurrent, adjHover, letter, position, update }: Props) => {
+const Cell = ({ adjCurrent, letter, position, update }: Props) => {
   const tileRef = useRef<HTMLDivElement>(null);
   const currentWord = useStore().game.currentWord;
   const gameStarted = useStore().gameStarted;
@@ -28,8 +27,10 @@ const Cell = ({ adjCurrent, adjHover, letter, position, update }: Props) => {
 
   const selectTile = (f = false) => {
     if (!gameStarted) return;
-    if (currentWord.includes(position))
+    if (currentWord.includes(position)) {
       removeLetter(currentWord.indexOf(position), f ? undefined : -1);
+      return;
+    }
     if (currentWord.length > 0 && !adjCurrent) return;
 
     addLetter(position);
@@ -147,13 +148,10 @@ const Cell = ({ adjCurrent, adjHover, letter, position, update }: Props) => {
           className={`flex h-full w-full items-center justify-center ${
             currentWord.includes(position)
               ? "bg-green-600/40"
-              : adjCurrent || adjHover
+              : adjCurrent
               ? "bg-amber-600/40"
               : "bg-neutral-800"
           }`}
-          onClick={() => selectTile()}
-          onMouseEnter={() => update(position)}
-          onMouseLeave={() => update()}
           ref={tileRef}
         >
           {letter}
