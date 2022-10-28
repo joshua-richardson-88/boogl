@@ -21,6 +21,7 @@ type Game = {
   wordList: string[];
   score: number;
   currentWord: number[];
+  pointerPosition: { x: number | null; y: number | null };
 };
 
 type Store = {
@@ -38,10 +39,17 @@ type Store = {
   clearWord: () => void;
   addWordToList: () => void;
   addLetter: (n: number) => void;
-  removeLetter: (i?: number) => void;
+  removeLetter: (s?: number, e?: number) => void;
   toggleIncorrectWord: (f?: boolean) => void;
   toggleAlreadyFound: (f?: boolean) => void;
   rotateTiles: (s: "cw" | "ccw") => void;
+  updateTouchPosition: ({
+    x,
+    y,
+  }: {
+    x: number | null;
+    y: number | null;
+  }) => void;
 };
 
 const GAME_ROWS = 4;
@@ -59,6 +67,7 @@ const useStore = create<Store>((set) => ({
     wordList: [],
     score: 0,
     currentWord: [],
+    pointerPosition: { x: null, y: null },
   },
   wasIncorrectWord: false,
   alreadyFound: false,
@@ -80,6 +89,7 @@ const useStore = create<Store>((set) => ({
           currentWord: [],
           score: 0,
           wordList: [],
+          pointerPosition: { x: null, y: null },
         },
       };
       return newState;
@@ -114,6 +124,7 @@ const useStore = create<Store>((set) => ({
       return {
         ...state,
         game: {
+          ...state.game,
           wordList: [word, ...state.game.wordList],
           score: state.game.score + newScore,
           currentWord: [],
@@ -139,12 +150,12 @@ const useStore = create<Store>((set) => ({
       },
     }));
   },
-  removeLetter: (i = 0) => {
+  removeLetter: (i = 0, e) => {
     set((state) => ({
       ...state,
       game: {
         ...state.game,
-        currentWord: state.game.currentWord.slice(i, -1),
+        currentWord: state.game.currentWord.slice(i, e),
       },
     }));
   },
@@ -174,6 +185,15 @@ const useStore = create<Store>((set) => ({
       };
       return newState;
     });
+  },
+  updateTouchPosition: (pos) => {
+    set((state) => ({
+      ...state,
+      game: {
+        ...state.game,
+        pointerPosition: pos,
+      },
+    }));
   },
 }));
 

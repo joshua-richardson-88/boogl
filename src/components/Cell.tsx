@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { makeGetAdjacent } from "../utils/gameUtils";
 import useStore from "../utils/store";
+import usePrevious from "../utils/usePrevious";
 
 type Props = {
   adjCurrent: boolean;
@@ -11,15 +12,28 @@ type Props = {
   update: (n?: number) => void;
 };
 const Cell = ({ adjCurrent, adjHover, letter, position, update }: Props) => {
+  const tileRef = useRef<HTMLDivElement>(null);
   const currentWord = useStore().game.currentWord;
   const gameStarted = useStore().gameStarted;
   const { cols, rows } = useStore().gameBoard;
+  const pointer = useStore().game.pointerPosition;
 
   const addLetter = useStore().addLetter;
   const removeLetter = useStore().removeLetter;
   const getAdj = useMemo(() => makeGetAdjacent(cols, rows), [cols, rows]);
 
   const [adjacent, setAdjacent] = useState<number[]>([]);
+  const [withinTile, setWithinTile] = useState(false);
+  const wasWithinTile = usePrevious(withinTile);
+
+  const selectTile = (f = false) => {
+    if (!gameStarted) return;
+    if (currentWord.includes(position))
+      removeLetter(currentWord.indexOf(position), f ? undefined : -1);
+    if (currentWord.length > 0 && !adjCurrent) return;
+
+    addLetter(position);
+  };
 
   useEffect(() => {
     if (!gameStarted) {
@@ -42,14 +56,24 @@ const Cell = ({ adjCurrent, adjHover, letter, position, update }: Props) => {
     }
   }, [currentWord, gameStarted, getAdj, position]);
 
-  const selectTile = () => {
-    if (!gameStarted) return;
-    if (currentWord.includes(position))
-      removeLetter(currentWord.indexOf(position));
-    if (currentWord.length > 0 && !adjCurrent) return;
+  useEffect(() => {
+    if (tileRef.current == null) return;
+    if (pointer.x == null || pointer.y == null) return;
 
-    addLetter(position);
-  };
+    const rect = tileRef.current.getBoundingClientRect();
+    const withinTile =
+      pointer.x >= rect.x &&
+      pointer.x <= rect.x + rect.width &&
+      pointer.y >= rect.y &&
+      pointer.y <= rect.y + rect.height;
+
+    setWithinTile(withinTile);
+  }, [pointer, tileRef]);
+
+  useEffect(() => {
+    if (withinTile === wasWithinTile || !withinTile) return;
+    selectTile(true);
+  }, [letter, selectTile, withinTile, wasWithinTile]);
 
   return (
     <div className="400 relative flex h-14 w-14 cursor-pointer select-none items-center justify-center text-xl">
@@ -127,30 +151,14 @@ const Cell = ({ adjCurrent, adjHover, letter, position, update }: Props) => {
               ? "bg-amber-600/40"
               : "bg-neutral-800"
           }`}
-          onClick={selectTile}
+          onClick={() => selectTile()}
           onMouseEnter={() => update(position)}
           onMouseLeave={() => update()}
-          onTouchMove={() => {
-            console.log(`over ${letter}`);
-          }}
+          ref={tileRef}
         >
           {letter}
         </div>
       </div>
-      {/* <div
-        className={`${
-          currentWord.includes(position)
-            ? "bg-gradient-radial from-neutral-800 to-green-700  hover:to-green-500"
-            : adjCurrent || adjHover
-            ? "bg-gradient-radial from-neutral-800 to-yellow-500 hover:to-amber-700"
-            : "bg-neutral-800"
-        } absolute inset-0 z-10 flex items-center justify-center hover:bg-neutral-700 focus:bg-neutral-800`}
-        onClick={selectTile}
-        onMouseEnter={() => update(position)}
-        onMouseLeave={() => update()}
-      >
-        {letter}
-      </div> */}
     </div>
   );
 };
