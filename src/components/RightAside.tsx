@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { tilesToWord } from "../utils/gameUtils";
 import useStore from "../utils/store";
 import { trpc } from "../utils/trpc";
@@ -62,7 +62,7 @@ const ClearIcon = () => (
 );
 const ClearButton = () => {
   const clearCurrent = useStore().clearWord;
-  const keyPressed = useKeyPress("Escape", () => clearCurrent);
+  const keyPressed = useKeyPress("Escape", () => clearCurrent());
 
   return (
     <button
@@ -78,7 +78,7 @@ const ClearButton = () => {
   );
 };
 const SubmitButton = () => {
-  const keyPressed = useKeyPress("Enter");
+  const [keyPressed, setKeyPressed] = useState(false);
   const list = useStore().game.wordList;
   const currentWord = useStore().game.currentWord;
   const tiles = useStore().gameBoard.tiles;
@@ -115,12 +115,22 @@ const SubmitButton = () => {
   };
 
   useEffect(() => {
-    const submitHandler = (e: KeyboardEvent) => {
-      if (e.key === "Enter") handleSubmit();
+    const downHandler = (e: KeyboardEvent) => {
+      if (e.key === "Enter") {
+        handleSubmit();
+        setKeyPressed(true);
+      }
+    };
+    const upHandler = (e: KeyboardEvent) => {
+      if (e.key === "Enter") setKeyPressed(false);
     };
 
-    window.addEventListener("keydown", submitHandler);
-    return () => window.removeEventListener("keydown", submitHandler);
+    window.addEventListener("keydown", downHandler);
+    window.addEventListener("keyup", upHandler);
+    return () => {
+      window.removeEventListener("keydown", downHandler);
+      window.removeEventListener("keyup", upHandler);
+    };
   }, [handleSubmit]);
 
   return (
