@@ -5,8 +5,7 @@ import InfoPanel from "./InfoPanel";
 import NewGameButton from "./NewGameButton";
 import LeftAside from "./LeftAside";
 import RightAside from "./RightAside";
-import Score from "./Score";
-import Timer from "./Timer";
+import TopAside from "./TopAside";
 import WordList from "./WordList";
 
 export {
@@ -17,7 +16,6 @@ export {
   NewGameButton,
   LeftAside,
   RightAside,
-  Score,
-  Timer,
+  TopAside,
   WordList,
 };

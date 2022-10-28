@@ -8,6 +8,7 @@ import {
   LeftAside,
   WordList,
   RightAside,
+  TopAside,
 } from "../components";
 
 const Home: NextPage = () => (
@@ -21,7 +22,7 @@ const Home: NextPage = () => (
     <main className="container mx-auto flex min-h-screen items-center justify-center gap-4 p-4 text-neutral-100">
       <div className="flex max-w-sm flex-1 flex-col gap-6">
         <h1 className="text-center text-5xl">Boogl</h1>
-        <NewGameButton />
+        <TopAside />
         <Game />
         <CurrentWord />
         <WordList />
