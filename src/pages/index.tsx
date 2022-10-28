@@ -16,14 +16,16 @@ const debounce = (f: any, x: number) => {
 const Home: NextPage = () => {
   const update = useStore().updateTouchPosition;
   const debounceHandler = useCallback(
-    (e: TouchEvent) =>
+    (e: TouchEvent) => {
+      e.preventDefault();
       debounce(
         update({
           x: e.touches[0]?.pageX ?? null,
           y: e.touches[0]?.pageY ?? null,
         }),
         100
-      ),
+      );
+    },
     [update]
   );
   useEffect(() => {
