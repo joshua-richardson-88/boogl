@@ -130,6 +130,9 @@ const Cell = ({ adjCurrent, adjHover, letter, position, update }: Props) => {
           onClick={selectTile}
           onMouseEnter={() => update(position)}
           onMouseLeave={() => update()}
+          onTouchMove={() => {
+            console.log(`over ${letter}`);
+          }}
         >
           {letter}
         </div>
