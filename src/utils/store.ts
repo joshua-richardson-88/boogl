@@ -65,7 +65,6 @@ const useStore = create<Store>((set) => ({
   gameStarted: false,
   validationUrl: new URL("https://api.dictionaryapi.dev/api/v2/entries/en"),
   startGame: () => {
-    console.log("start game");
     set((state) => {
       const tiles = generateTileset(state.diceBag);
       const tileMap = getCurrentMap(tiles, GAME_COLS, GAME_ROWS);
