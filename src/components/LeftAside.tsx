@@ -59,7 +59,7 @@ const RotateButton = ({ dir }: ButtonProps) => {
 };
 
 const LeftAside = () => (
-  <div className="flex flex-col gap-2 sm:flex-row">
+  <div className="flex flex-col gap-2">
     <RotateButton dir="ccw" />
     <RotateButton dir="cw" />
   </div>
