@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { Cell } from "./index";
+import { Cell, LeftAside, RightAside } from "./index";
 import { makeGetAdjacent, makeFindPath } from "../utils/gameUtils";
 import useStore from "../utils/store";
 
 const keyIsLetter = (s: string) =>
   s.length === 1 && s.toLowerCase().match(/[a-z]/);
 
-const Game = () => {
+const GameBoard = () => {
   const [adjacentHover, setAdjacentHover] = useState<number[]>([]);
   const [adjacentCurrent, setAdjacentCurrent] = useState<number[]>([]);
 
@@ -109,5 +109,12 @@ const Game = () => {
     </div>
   );
 };
+const Game = () => (
+  <div className="flex w-full justify-evenly gap-4">
+    <LeftAside />
+    <GameBoard />
+    <RightAside />
+  </div>
+);
 
 export default Game;
