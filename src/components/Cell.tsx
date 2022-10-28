@@ -16,6 +16,7 @@ const Cell = ({ adjCurrent, adjHover, letter, position, update }: Props) => {
   const { cols, rows } = useStore().gameBoard;
 
   const addLetter = useStore().addLetter;
+  const removeLetter = useStore().removeLetter;
   const getAdj = useMemo(() => makeGetAdjacent(cols, rows), [cols, rows]);
 
   const [adjacent, setAdjacent] = useState<number[]>([]);
@@ -42,12 +43,11 @@ const Cell = ({ adjCurrent, adjHover, letter, position, update }: Props) => {
   }, [currentWord, gameStarted, getAdj, position]);
 
   const selectTile = () => {
-    if (
-      !gameStarted ||
-      currentWord.includes(position) ||
-      (currentWord.length > 0 && !adjCurrent)
-    )
-      return;
+    if (!gameStarted) return;
+    if (currentWord.includes(position))
+      removeLetter(currentWord.indexOf(position));
+    if (currentWord.length > 0 && !adjCurrent) return;
+
     addLetter(position);
   };
 

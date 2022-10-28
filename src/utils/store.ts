@@ -38,7 +38,7 @@ type Store = {
   clearWord: () => void;
   addWordToList: () => void;
   addLetter: (n: number) => void;
-  removeLetter: () => void;
+  removeLetter: (i?: number) => void;
   toggleIncorrectWord: (f?: boolean) => void;
   toggleAlreadyFound: (f?: boolean) => void;
   rotateTiles: (s: "cw" | "ccw") => void;
@@ -139,12 +139,12 @@ const useStore = create<Store>((set) => ({
       },
     }));
   },
-  removeLetter: () => {
+  removeLetter: (i = 0) => {
     set((state) => ({
       ...state,
       game: {
         ...state.game,
-        currentWord: state.game.currentWord.slice(0, -1),
+        currentWord: state.game.currentWord.slice(i, -1),
       },
     }));
   },
