@@ -45,7 +45,7 @@ const Cell = ({ adjCurrent, adjHover, letter, position, update }: Props) => {
     if (
       !gameStarted ||
       currentWord.includes(position) ||
-      (currentWord.length >= 0 && !adjCurrent)
+      (currentWord.length > 0 && !adjCurrent)
     )
       return;
     addLetter(position);

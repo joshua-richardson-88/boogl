@@ -7,8 +7,6 @@ const GameButton = () => {
   const endGame = useStore().endGame;
 
   const handleClick = () => {
-    console.log("handle click");
-    console.log("game is started", isGameStarted);
     if (isGameStarted) endGame();
     else startGame();
   };
