@@ -20,8 +20,6 @@ const Cell = ({ adjCurrent, adjHover, letter, position, update }: Props) => {
 
   const [adjacent, setAdjacent] = useState<number[]>([]);
 
-  console.log(`letter ${letter} has left adjacent of ${adjacent[3]}`);
-
   useEffect(() => {
     if (!gameStarted) {
       setAdjacent([]);

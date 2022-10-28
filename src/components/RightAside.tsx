@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { tilesToWord } from "../utils/gameUtils";
 import useStore from "../utils/store";
 import { trpc } from "../utils/trpc";
+import useKeyPress from "../utils/useKeyPress";
 
 const SubmitIcon = () => (
   <div role="status">
@@ -43,8 +44,41 @@ const LoadingIcon = () => (
     <span className="sr-only">Loading...</span>
   </div>
 );
+const ClearIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={1.5}
+    stroke="currentColor"
+    className="h-6 w-6"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M6 18L18 6M6 6l12 12"
+    />
+  </svg>
+);
+const ClearButton = () => {
+  const clearCurrent = useStore().clearWord;
+  const keyPressed = useKeyPress("Escape", () => clearCurrent);
 
+  return (
+    <button
+      className={`
+      inset-shadow flex h-10 w-10 flex-1 items-center justify-center rounded bg-red-500/40 p-2 hover:bg-red-500/60 ${
+        keyPressed && "bg-red-500"
+      }
+      `}
+      onClick={clearCurrent}
+    >
+      <ClearIcon />
+    </button>
+  );
+};
 const SubmitButton = () => {
+  const keyPressed = useKeyPress("Enter");
   const list = useStore().game.wordList;
   const currentWord = useStore().game.currentWord;
   const tiles = useStore().gameBoard.tiles;
@@ -91,11 +125,23 @@ const SubmitButton = () => {
 
   return (
     <button
-      className="flex flex-1 items-center justify-center rounded"
+      className={`
+      inset-shadow flex h-10 w-10 flex-1 items-center justify-center rounded bg-neutral-500/40 p-2 hover:bg-neutral-500/60 ${
+        keyPressed && "bg-neutral-500"
+      }
+      `}
       onClick={handleSubmit}
     >
       {isLoading ? <LoadingIcon /> : <SubmitIcon />}
     </button>
   );
 };
-export default SubmitButton;
+
+const RightAside = () => (
+  <div className="flex flex-col gap-2 sm:flex-row">
+    <ClearButton />
+    <SubmitButton />
+  </div>
+);
+
+export default RightAside;

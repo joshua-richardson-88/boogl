@@ -2,13 +2,12 @@ import type { NextPage } from "next";
 import Head from "next/head";
 
 import {
-  ClearButton,
   CurrentWord,
   Game,
-  InfoPanel,
   NewGameButton,
-  SubmitButton,
+  LeftAside,
   WordList,
+  RightAside,
 } from "../components";
 
 const Home: NextPage = () => (
@@ -25,14 +24,12 @@ const Home: NextPage = () => (
 
         <NewGameButton />
         <CurrentWord />
-        <div className="flex w-full justify-between">
+        <div className="flex w-full justify-evenly gap-4">
+          <LeftAside />
           <Game />
-          <InfoPanel />
+          <RightAside />
         </div>
-        <div className="flex gap-4">
-          <ClearButton />
-          <SubmitButton />
-        </div>
+
         <WordList />
       </div>
     </main>
