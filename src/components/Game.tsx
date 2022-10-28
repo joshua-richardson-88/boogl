@@ -95,7 +95,7 @@ const GameBoard = () => {
   ]);
 
   return (
-    <div className="grid grid-cols-4 grid-rows-4 gap-2">
+    <div className="grid touch-none grid-cols-4 grid-rows-4 gap-2">
       {tiles.map((d, i) => (
         <Cell
           key={i}
