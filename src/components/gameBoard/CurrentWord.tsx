@@ -1,6 +1,6 @@
-import { tilesToWord } from "../utils/gameUtils";
-import useStore from "../utils/store";
-import useKeyPress from "../utils/useKeyPress";
+import { tilesToWord } from "../../utils/gameUtils";
+import useStore from "../../utils/store";
+import useKeyPress from "../../hooks/useKeyPress";
 
 const CurrentWord = () => {
   const word = useStore().game.currentWord;

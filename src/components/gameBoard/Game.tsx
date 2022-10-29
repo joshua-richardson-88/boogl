@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { Cell, LeftAside, RightAside } from "./index";
-import { makeGetAdjacent, makeFindPath } from "../utils/gameUtils";
-import useStore from "../utils/store";
+import { makeGetAdjacent, makeFindPath } from "../../utils/gameUtils";
+import useStore from "../../utils/store";
 
 const keyIsLetter = (s: string) =>
   s.length === 1 && s.toLowerCase().match(/[a-z]/);

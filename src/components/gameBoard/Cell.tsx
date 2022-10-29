@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import { makeGetAdjacent } from "../utils/gameUtils";
-import useStore from "../utils/store";
-import usePrevious from "../utils/usePrevious";
+import { makeGetAdjacent } from "../../utils/gameUtils";
+import useStore from "../../utils/store";
+import usePrevious from "../../hooks/usePrevious";
 
 type Props = {
   adjCurrent: boolean;

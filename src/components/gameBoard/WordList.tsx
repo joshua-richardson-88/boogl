@@ -1,4 +1,4 @@
-import useStore from "../utils/store";
+import useStore from "../../utils/store";
 
 const WordList = () => {
   const list = useStore().game.wordList;

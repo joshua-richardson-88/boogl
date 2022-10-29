@@ -1,6 +1,5 @@
-import { ReactNode } from "react";
-import useStore from "../utils/store";
-import useKeyPress from "../utils/useKeyPress";
+import useStore from "../../utils/store";
+import useKeyPress from "../../hooks/useKeyPress";
 
 const RotateCWIcon = () => (
   <svg

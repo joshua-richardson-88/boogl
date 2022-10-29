@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useStore from "../utils/store";
+import useStore from "../../utils/store";
 
 const GameButton = () => {
   const isGameStarted = useStore().gameStarted;

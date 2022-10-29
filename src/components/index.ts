@@ -1,17 +1,21 @@
-import Cell from "./Cell";
-import CurrentWord from "./CurrentWord";
-import Game from "./Game";
-import NewGameButton from "./NewGameButton";
-import LeftAside from "./LeftAside";
-import RightAside from "./RightAside";
-import TopAside from "./TopAside";
-import WordList from "./WordList";
-
-export {
+import Header from "./header";
+import {
   Cell,
   CurrentWord,
   Game,
-  NewGameButton,
+  LeftAside,
+  RightAside,
+  TopAside,
+  WordList,
+} from "./gameBoard";
+import Card from "./card";
+
+export {
+  Card,
+  Cell,
+  CurrentWord,
+  Game,
+  Header,
   LeftAside,
   RightAside,
   TopAside,

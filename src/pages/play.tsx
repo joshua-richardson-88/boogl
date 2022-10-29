@@ -2,7 +2,13 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useCallback, useEffect, useState } from "react";
 
-import { Header } from "../components";
+import {
+  CurrentWord,
+  Game,
+  WordList,
+  TopAside,
+  Header,
+} from "../components/gameBoard";
 import useStore from "../utils/store";
 
 const debounce = (f: any, x: number) => {
@@ -53,12 +59,19 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Boogl</title>
+        <title>Boogl | Game</title>
         <meta name="description" content="Interview Coding Sample" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main className="container mx-auto flex min-h-screen items-center justify-center gap-4 p-4 text-neutral-100"></main>
+      <main className="container mx-auto flex min-h-screen items-center justify-center gap-4 p-4 text-neutral-100">
+        <div className="flex max-w-sm flex-1 flex-col gap-6">
+          <TopAside />
+          <Game />
+          <CurrentWord />
+          <WordList />
+        </div>
+      </main>
     </>
   );
 };
