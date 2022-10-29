@@ -22,7 +22,7 @@ const Header = () => {
   const [isOpen, toggleOpen] = useToggle(false);
 
   return (
-    <header className="static flex w-screen flex-col gap-1 bg-black/20 px-4 pt-2 pb-4 text-neutral-100 ">
+    <header className="static flex w-full flex-col gap-1 bg-black/20 px-4 pt-2 pb-4 text-neutral-100 ">
       <div className="flex items-center justify-between">
         <Link href="/">
           <h1
