@@ -58,7 +58,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="container fixed mx-auto flex min-h-screen items-center justify-center gap-4 overflow-hidden p-4 text-neutral-100">
+      <main className="container mx-auto flex min-h-screen items-center justify-center gap-4 p-4 text-neutral-100">
         <div className="flex max-w-sm flex-1 flex-col gap-6">
           <h1 className="text-center text-5xl">Boogl</h1>
           <TopAside />
