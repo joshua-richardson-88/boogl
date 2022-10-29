@@ -22,9 +22,11 @@ const Home: NextPage = () => {
       <Header />
 
       <main className="mt-2 w-screen">
-        <div className="flex flex-col items-center">
-          {clientOnly && <Card />}
-        </div>
+        {clientOnly && (
+          <div className="flex flex-col items-center">
+            <Card />
+          </div>
+        )}
       </main>
     </>
   );

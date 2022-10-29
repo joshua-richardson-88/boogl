@@ -2,13 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useCallback, useEffect, useState } from "react";
 
-import {
-  CurrentWord,
-  Game,
-  WordList,
-  TopAside,
-  Header,
-} from "../components/gameBoard";
+import { CurrentWord, Game, WordList, TopAside, Header } from "../components";
 import useStore from "../utils/store";
 
 const debounce = (f: any, x: number) => {
