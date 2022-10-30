@@ -58,7 +58,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main className="-mt-16 flex min-h-screen items-center justify-center text-neutral-100">
+      <main className="flex min-h-screen items-center justify-center text-neutral-100">
         <div className="flex max-w-sm flex-1 flex-col gap-6">
           <TopAside />
           <Game />
