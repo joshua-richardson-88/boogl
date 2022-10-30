@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import useToggle from "../../hooks/useToggle";
 
 const MenuIcon = () => (
@@ -19,8 +20,10 @@ const MenuIcon = () => (
 );
 
 const Header = () => {
+  const router = useRouter();
   const [isOpen, toggleOpen] = useToggle(false);
 
+  console.log(router.pathname);
   return (
     <header className="static flex w-full flex-col gap-1 bg-black/20 px-4 pt-2 pb-4 text-neutral-100 ">
       <div className="flex items-center justify-between">
@@ -44,22 +47,26 @@ const Header = () => {
       </div>
       {isOpen && (
         <div className="my-2 flex w-screen flex-col items-center gap-2">
-          <Link href="/play">
-            <p
-              className="cursor-pointer select-none rounded bg-green-400/30 px-4 py-1 hover:animate-wiggle hover:bg-green-400/50 focus:animate-wiggle focus:bg-green-400/50"
-              tabIndex={0}
-            >
-              Play
-            </p>
-          </Link>
-          <Link href="/profile">
-            <p
-              tabIndex={0}
-              className="cursor-pointer select-none px-4 py-1 hover:animate-wiggle hover:text-green-400 focus:animate-wiggle "
-            >
-              Profile
-            </p>
-          </Link>
+          {router.pathname !== "/play" && (
+            <Link href="/play">
+              <p
+                className="cursor-pointer select-none rounded bg-green-400/30 px-4 py-1 hover:animate-wiggle hover:bg-green-400/50 focus:animate-wiggle focus:bg-green-400/50"
+                tabIndex={0}
+              >
+                Play
+              </p>
+            </Link>
+          )}
+          {router.pathname !== "/profile" && (
+            <Link href="/profile">
+              <p
+                tabIndex={0}
+                className="cursor-pointer select-none px-4 py-1 hover:animate-wiggle hover:text-green-400 focus:animate-wiggle "
+              >
+                Profile
+              </p>
+            </Link>
+          )}
         </div>
       )}
     </header>
