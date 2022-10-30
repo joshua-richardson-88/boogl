@@ -1,66 +1,25 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useCallback, useEffect, useState } from "react";
+import Link from "next/link";
 
 import { Header } from "../components";
-import useStore from "../utils/store";
 
-const debounce = (f: any, x: number) => {
-  let timerId: NodeJS.Timeout | undefined = undefined;
-  return (...args: any) => {
-    clearTimeout(timerId);
-    timerId = setTimeout(() => f(...args), x);
-  };
-};
-
-const Home: NextPage = () => {
-  const [pressed, setPressed] = useState(false);
-  const update = useStore().updateTouchPosition;
-  const debounceHandler = useCallback(
-    (e: PointerEvent) => {
-      if (pressed) {
-        debounce(
-          update({
-            x: e.pageX,
-            y: e.pageY,
-          }),
-          200
-        );
-      }
-    },
-    [pressed, update]
-  );
-  useEffect(() => {
-    const startHandler = (e: PointerEvent) => {
-      setPressed(true);
-      debounceHandler(e);
-    };
-    const finishHandler = (e: PointerEvent) => {
-      setPressed(false);
-      update({ x: null, y: null });
-    };
-
-    window.addEventListener("pointerdown", startHandler, { passive: false });
-    window.addEventListener("pointermove", debounceHandler, { passive: false });
-    window.addEventListener("pointerup", finishHandler, { passive: false });
-    return () => {
-      window.removeEventListener("pointerdown", debounceHandler);
-      window.removeEventListener("pointermove", debounceHandler);
-      window.removeEventListener("pointerup", finishHandler);
-    };
-  }, [debounceHandler, update]);
-
-  return (
-    <>
-      <Head>
-        <title>Boogl</title>
-        <meta name="description" content="Interview Coding Sample" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Header />
-      <main className="container mx-auto flex min-h-screen items-center justify-center gap-4 p-4 text-neutral-100"></main>
-    </>
-  );
-};
+const Home: NextPage = () => (
+  <>
+    <Head>
+      <title>Boogl</title>
+      <meta name="description" content="Interview Coding Sample" />
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
+    <Header />
+    <main className="-mt-16 flex h-screen flex-col items-center justify-center overflow-hidden text-neutral-100">
+      <Link href="/play">
+        <span className="cursor-pointer select-none rounded-md bg-green-800 px-6 py-3 text-3xl hover:bg-green-700 hover:px-8 hover:py-4 focus:bg-green-700 focus:px-8 focus:py-4">
+          Solo Play
+        </span>
+      </Link>
+    </main>
+  </>
+);
 
 export default Home;
