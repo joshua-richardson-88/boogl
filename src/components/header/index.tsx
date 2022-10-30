@@ -28,7 +28,10 @@ const Header = () => {
   useClickOutside(menuRef, () => toggleOpen(false));
 
   return (
-    <header className="absolute top-0 left-0 right-0 z-50 flex w-full flex-col gap-1 overflow-hidden bg-neutral-900 px-4 pt-2 pb-4 text-neutral-100">
+    <header
+      ref={menuRef}
+      className="absolute top-0 left-0 right-0 z-50 flex w-full flex-col gap-1 overflow-hidden bg-neutral-900 px-4 pt-2 pb-4 text-neutral-100"
+    >
       <div className="flex items-center justify-between">
         <Link href="/">
           <h1
@@ -38,7 +41,7 @@ const Header = () => {
             Boogl
           </h1>
         </Link>
-        <div ref={menuRef} className="flex items-center justify-center">
+        <div className="flex items-center justify-center">
           <button
             tabIndex={0}
             className="rounded p-1 text-neutral-300 hover:bg-neutral-50/20 focus:bg-neutral-50/20"
