@@ -8,8 +8,8 @@ const CurrentWord = () => {
   const wasIncorrect = useStore().wasIncorrectWord;
   const wasFound = useStore().alreadyFound;
 
-  const removeLetter = useStore().removeLetter;
   const backspace = useStore().backspace;
+  const clear = useStore().clearWord;
   const toggleIncorrect = useStore().toggleIncorrectWord;
   const toggleAlreadyFound = useStore().toggleAlreadyFound;
 
@@ -20,7 +20,8 @@ const CurrentWord = () => {
     }, 500);
   };
   useKeyPress("Backspace", backspace);
-  useKeyPress("Delete", removeLetter);
+  useKeyPress("Delete", backspace);
+  useKeyPress("Escape", clear);
 
   return (
     <h2
