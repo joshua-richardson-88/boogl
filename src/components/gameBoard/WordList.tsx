@@ -2,6 +2,7 @@ import useStore from "../../utils/store";
 
 const WordList = () => {
   const list = useStore().game.wordList;
+
   return (
     <div className="h-40 select-none">
       <h3 className="border-b border-b-neutral-100 text-center text-xl">

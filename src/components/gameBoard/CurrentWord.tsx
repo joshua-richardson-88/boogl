@@ -9,6 +9,7 @@ const CurrentWord = () => {
   const wasFound = useStore().alreadyFound;
 
   const removeLetter = useStore().removeLetter;
+  const backspace = useStore().backspace;
   const toggleIncorrect = useStore().toggleIncorrectWord;
   const toggleAlreadyFound = useStore().toggleAlreadyFound;
 
@@ -18,7 +19,7 @@ const CurrentWord = () => {
       toggleAlreadyFound(false);
     }, 500);
   };
-  useKeyPress("Backspace", removeLetter);
+  useKeyPress("Backspace", backspace);
   useKeyPress("Delete", removeLetter);
 
   return (

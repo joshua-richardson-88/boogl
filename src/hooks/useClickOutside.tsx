@@ -15,7 +15,6 @@ export default function useClickOutside<T extends HTMLElement>(
   eventType: UserEvents = "pointerdown"
 ) {
   useEventListener(eventType, (event) => {
-    console.log(ref.current);
     if (ref.current == null || ref.current.contains(event.target as T)) return;
     callback(event);
   });

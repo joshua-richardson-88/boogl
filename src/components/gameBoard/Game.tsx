@@ -53,7 +53,7 @@ const GameBoard = () => {
     const keyDownHandler = (e: KeyboardEvent) => {
       if (!gameStarted) return;
       if (!keyIsLetter(e.key)) return;
-      const key = e.key.toUpperCase();
+      const key = e.key === "q" ? "QU" : e.key.toUpperCase();
 
       if (!tiles.includes(key)) return;
       if (currentWord.length === 0) {

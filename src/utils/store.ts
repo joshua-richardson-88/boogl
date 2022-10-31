@@ -40,6 +40,7 @@ type Store = {
   addWordToList: () => void;
   addLetter: (n: number) => void;
   removeLetter: (s?: number, e?: number) => void;
+  backspace: () => void;
   toggleIncorrectWord: (f?: boolean) => void;
   toggleAlreadyFound: (f?: boolean) => void;
   rotateTiles: (s: "cw" | "ccw") => void;
@@ -120,6 +121,7 @@ const useStore = create<Store>((set) => ({
     set((state) => {
       const word = tilesToWord(state.game.currentWord, state.gameBoard.tiles);
       const newScore = calculateScore(word);
+
       return {
         ...state,
         game: {
@@ -157,6 +159,15 @@ const useStore = create<Store>((set) => ({
         currentWord: state.game.currentWord.filter((_, x) => {
           return x < i ? true : e != null && x >= e ? true : false;
         }),
+      },
+    }));
+  },
+  backspace: () => {
+    set((state) => ({
+      ...state,
+      game: {
+        ...state.game,
+        currentWord: state.game.currentWord.slice(0, -1),
       },
     }));
   },
