@@ -36,7 +36,7 @@ const Cell = ({ adjCurrent, letter, position }: Props) => {
 
       addLetter(position);
     },
-    [adjCurrent, currentWord, gameStarted, position]
+    [addLetter, adjCurrent, currentWord, gameStarted, position, removeLetter]
   );
 
   useEffect(() => {

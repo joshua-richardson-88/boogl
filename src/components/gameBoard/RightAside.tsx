@@ -112,7 +112,15 @@ const SubmitButton = () => {
     }
 
     mutate(word);
-  }, [currentWord, list, tiles]);
+  }, [
+    clear,
+    currentWord,
+    list,
+    mutate,
+    tiles,
+    toggleAlreadyUsed,
+    toggleIncorrect,
+  ]);
 
   useEffect(() => {
     const downHandler = (e: KeyboardEvent) => {
