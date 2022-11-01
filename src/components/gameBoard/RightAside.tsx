@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { tilesToWord } from "../../utils/gameUtils";
 import useStore from "../../utils/gameStore";
 import { trpc } from "../../utils/trpc";
@@ -99,7 +99,7 @@ const SubmitButton = () => {
     },
   });
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     const word = tilesToWord(currentWord, tiles);
     const wordTooShort = currentWord.length < 3;
     const alreadyUsed = list.includes(word);
@@ -112,7 +112,7 @@ const SubmitButton = () => {
     }
 
     mutate(word);
-  };
+  }, [currentWord, list, tiles]);
 
   useEffect(() => {
     const downHandler = (e: KeyboardEvent) => {

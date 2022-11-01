@@ -21,7 +21,7 @@ const useKeyPress = (targetKey: string, cb?: () => void) => {
       window.removeEventListener("keydown", downHandler);
       window.removeEventListener("keyup", upHandler);
     };
-  }, [targetKey]);
+  }, [cb, targetKey]);
 
   return keyPressed;
 };

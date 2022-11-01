@@ -5,8 +5,10 @@ import { useCallback, useEffect, useState } from "react";
 import { CurrentWord, Game, WordList, TopAside, Header } from "../components";
 import useStore from "../utils/gameStore";
 
+// eslint-disable-next-line  @typescript-eslint/no-explicit-any
 const debounce = (f: any, x: number) => {
   let timerId: NodeJS.Timeout | undefined = undefined;
+  // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   return (...args: any) => {
     clearTimeout(timerId);
     timerId = setTimeout(() => f(...args), x);
@@ -35,7 +37,7 @@ const Home: NextPage = () => {
       setPressed(true);
       debounceHandler(e);
     };
-    const finishHandler = (e: PointerEvent) => {
+    const finishHandler = () => {
       setPressed(false);
       update({ x: null, y: null });
     };

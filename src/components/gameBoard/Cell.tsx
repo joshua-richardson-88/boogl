@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { makeGetAdjacent } from "../../utils/gameUtils";
 import useStore from "../../utils/gameStore";
@@ -10,7 +10,7 @@ type Props = {
   position: number;
   update: (n?: number) => void;
 };
-const Cell = ({ adjCurrent, letter, position, update }: Props) => {
+const Cell = ({ adjCurrent, letter, position }: Props) => {
   const tileRef = useRef<HTMLDivElement>(null);
   const currentWord = useStore().game.currentWord;
   const gameStarted = useStore().gameStarted;
@@ -25,16 +25,19 @@ const Cell = ({ adjCurrent, letter, position, update }: Props) => {
   const [withinTile, setWithinTile] = useState(false);
   const wasWithinTile = usePrevious(withinTile);
 
-  const selectTile = (f = false) => {
-    if (!gameStarted) return;
-    if (currentWord.includes(position)) {
-      removeLetter(currentWord.indexOf(position), f ? undefined : -1);
-      return;
-    }
-    if (currentWord.length > 0 && !adjCurrent) return;
+  const selectTile = useCallback(
+    (f = false) => {
+      if (!gameStarted) return;
+      if (currentWord.includes(position)) {
+        removeLetter(currentWord.indexOf(position), f ? undefined : -1);
+        return;
+      }
+      if (currentWord.length > 0 && !adjCurrent) return;
 
-    addLetter(position);
-  };
+      addLetter(position);
+    },
+    [adjCurrent, currentWord, gameStarted, position]
+  );
 
   useEffect(() => {
     if (!gameStarted) {

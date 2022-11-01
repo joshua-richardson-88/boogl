@@ -67,7 +67,7 @@ const Timer = ({ maxTime }: TimerProps) => {
     }
     const timer = setInterval(() => setT((p) => p - 1), 1000);
     return () => clearInterval(timer);
-  }, [endGame, isGameStarted, maxTime, t]);
+  }, [endGame, isGameStarted, maxTime, persistGame, t, tiles, words]);
 
   return (
     <div>

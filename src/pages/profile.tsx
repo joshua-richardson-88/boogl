@@ -28,8 +28,8 @@ const Home: NextPage = () => {
           <div className="flex flex-col items-center gap-4 pt-4">
             <Card />
             <div className="flex flex-col gap-2">
-              {games.map((game) => (
-                <GameCard {...game} />
+              {games.map((game, i) => (
+                <GameCard key={i} {...game} />
               ))}
             </div>
           </div>

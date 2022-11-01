@@ -1,15 +1,8 @@
-import { FormEvent, useEffect, useRef, useState } from "react";
-import { customAlphabet } from "nanoid";
-import { nolookalikesSafe } from "nanoid-dictionary";
+import { FormEvent, useRef } from "react";
 
 import useClickOutside from "../../hooks/useClickOutside";
-import { useLocalStorage } from "../../hooks/useStorage";
 import useToggle from "../../hooks/useToggle";
 import { userStore } from "../../utils/userStore";
-
-const nanoid = customAlphabet(nolookalikesSafe, 12);
-type User = { name: string; id: string };
-const defaultUser: User = { name: "Some User", id: nanoid() };
 
 const ActionMenuIcon = () => (
   <svg

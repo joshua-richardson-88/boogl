@@ -20,6 +20,7 @@ export const createContextInner = async (opts: CreateContextOptions) => {
  * @link https://trpc.io/docs/context
  **/
 export const createContext = async (
+  // eslint-disable-next-line  @typescript-eslint/no-unused-vars
   opts: trpcNext.CreateNextContextOptions
 ) => {
   return await createContextInner({});
