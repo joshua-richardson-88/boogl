@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { tilesToWord } from "../../utils/gameUtils";
-import useStore from "../../utils/store";
+import useStore from "../../utils/gameStore";
 import { trpc } from "../../utils/trpc";
 import useKeyPress from "../../hooks/useKeyPress";
 

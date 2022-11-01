@@ -1,4 +1,4 @@
-import useStore from "../../utils/store";
+import useStore from "../../utils/gameStore";
 import useKeyPress from "../../hooks/useKeyPress";
 
 const RotateCWIcon = () => (

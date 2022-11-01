@@ -3,7 +3,7 @@ import Head from "next/head";
 import { useCallback, useEffect, useState } from "react";
 
 import { CurrentWord, Game, WordList, TopAside, Header } from "../components";
-import useStore from "../utils/store";
+import useStore from "../utils/gameStore";
 
 const debounce = (f: any, x: number) => {
   let timerId: NodeJS.Timeout | undefined = undefined;

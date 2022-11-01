@@ -5,6 +5,7 @@ import { nolookalikesSafe } from "nanoid-dictionary";
 import useClickOutside from "../../hooks/useClickOutside";
 import { useLocalStorage } from "../../hooks/useStorage";
 import useToggle from "../../hooks/useToggle";
+import { userStore } from "../../utils/userStore";
 
 const nanoid = customAlphabet(nolookalikesSafe, 12);
 type User = { name: string; id: string };
@@ -84,23 +85,19 @@ const Avatar = () => (
 );
 
 const Card = () => {
-  const [user, setUser, clearUser] = useLocalStorage("user", defaultUser);
   const [editMode, setEditMode] = useToggle(false);
+  const updateUser = userStore().updateUsername;
+  const clearUser = userStore().clearProfile;
+  const username = userStore().username;
+  const id = userStore().id;
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const name = (e.target as typeof e.target & { username: { value: string } })
       .username.value;
-    setUser((p) => {
-      if (p == null) return { ...defaultUser, name };
-      return { ...p, name };
-    });
+    updateUser(name);
     setEditMode(false);
   };
-
-  useEffect(() => {
-    if (user == null) setUser(defaultUser);
-  }, [user]);
 
   return (
     <div className="w-full max-w-sm rounded-lg border border-gray-200 bg-gray-200 text-neutral-100 shadow-md dark:border-gray-700 dark:bg-gray-700">
@@ -111,7 +108,7 @@ const Card = () => {
           <div>
             {!editMode && (
               <h5 className="text-xl font-medium text-gray-900 dark:text-white">
-                {user && user.name}
+                {username}
               </h5>
             )}
             {editMode && (
@@ -119,13 +116,13 @@ const Card = () => {
                 <input
                   className="hover-bg-white/20 rounded-t-md bg-white/10 px-2 py-px outline-none focus:bg-white/20 active:bg-white/20"
                   name="username"
-                  placeholder={user?.name}
+                  placeholder={username}
                   type="text"
                 />
               </form>
             )}
             <span className="text-sm text-gray-500 dark:text-gray-400">
-              {user && `#${user.id}`}
+              {`#${id}`}
             </span>
           </div>
         </div>

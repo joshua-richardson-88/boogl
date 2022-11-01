@@ -54,7 +54,7 @@ const GAME_ROWS = 4;
 const GAME_COLS = 4;
 
 const initState: State = {
-  diceBag: diceBag as BagODice,
+  diceBag: diceBag,
   gameBoard: {
     rows: GAME_ROWS,
     cols: GAME_COLS,

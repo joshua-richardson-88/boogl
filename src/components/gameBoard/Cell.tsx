@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { makeGetAdjacent } from "../../utils/gameUtils";
-import useStore from "../../utils/store";
+import useStore from "../../utils/gameStore";
 import usePrevious from "../../hooks/usePrevious";
 
 type Props = {

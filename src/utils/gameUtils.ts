@@ -1,6 +1,6 @@
-import type { Dice, BagODice } from "./store";
+import type { Dice, BagODice } from "./gameStore";
 
-export const diceBag = [
+export const diceBag: BagODice = [
   ["A", "A", "E", "E", "G", "N"],
   ["A", "B", "B", "J", "O", "O"],
   ["A", "C", "H", "O", "P", "S"],
