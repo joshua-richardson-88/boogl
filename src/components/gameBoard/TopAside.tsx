@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
-import useStore from "../../utils/gameStore";
+import gameStore from "../../utils/gameStore";
+import { userStore } from "../../utils/userStore";
 
 const GameButton = () => {
-  const isGameStarted = useStore().gameStarted;
-  const startGame = useStore().startGame;
-  const endGame = useStore().endGame;
+  const isGameStarted = gameStore().gameStarted;
+  const tiles = gameStore().gameBoard.tiles;
+  const words = gameStore().game.wordList;
+
+  const startGame = gameStore().startGame;
+  const endGame = gameStore().endGame;
+
+  const persistGame = userStore().addGame;
 
   const handleClick = () => {
     if (isGameStarted) {
       endGame();
+      persistGame("solo", tiles, words);
     } else {
       startGame();
     }
@@ -26,7 +33,7 @@ const GameButton = () => {
   );
 };
 const Score = () => {
-  const x = useStore().game.score;
+  const x = gameStore().game.score;
   return (
     <div className="flex w-16 flex-col items-center">
       <p>Score</p>
@@ -38,8 +45,12 @@ type TimerProps = { maxTime: number };
 const Timer = ({ maxTime }: TimerProps) => {
   const [t, setT] = useState(-1);
 
-  const isGameStarted = useStore().gameStarted;
-  const endGame = useStore().endGame;
+  const isGameStarted = gameStore().gameStarted;
+  const tiles = gameStore().gameBoard.tiles;
+  const words = gameStore().game.wordList;
+
+  const endGame = gameStore().endGame;
+  const persistGame = userStore().addGame;
 
   useEffect(() => {
     if (!isGameStarted) {
@@ -49,6 +60,8 @@ const Timer = ({ maxTime }: TimerProps) => {
     if (isGameStarted && t === -1) setT(maxTime);
     if (t === 0) {
       endGame();
+
+      persistGame("solo", tiles, words);
       setT(-1);
       return;
     }

@@ -64,11 +64,7 @@ const GameBoard = () => {
         setAdjacentCurrent(getAdj(pos));
         return;
       }
-      const _path = findPath(
-        [...currentWord.map((i) => tiles[i] ?? ""), key],
-        new Set(),
-        new Set()
-      );
+      const _path = findPath([...currentWord.map((i) => tiles[i] ?? ""), key]);
       if (_path == null) return;
 
       const path = [..._path.values()].reverse();

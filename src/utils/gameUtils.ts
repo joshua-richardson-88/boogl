@@ -1,5 +1,16 @@
 import type { Dice, BagODice } from "./gameStore";
 
+type AdjacentLetters = string[];
+type Position = number;
+type Instance = [Position, AdjacentLetters];
+export type HeatMap = {
+  [k: string]: number;
+  max: number;
+};
+export type TileMap = {
+  [k: string]: Instance[];
+};
+
 export const diceBag: BagODice = [
   ["A", "A", "E", "E", "G", "N"],
   ["A", "B", "B", "J", "O", "O"],
@@ -50,13 +61,6 @@ export const calculateScore = (s: string) => {
 // ----------------------------------------------------------------------------
 const keyToIndexes = (as: string[]) => (s: string) =>
   as.reduce((a, v, i) => (v === s ? [...a, i] : a), [] as number[]);
-
-type AdjacentLetters = string[];
-type Position = number;
-type Instance = [Position, AdjacentLetters];
-export type TileMap = {
-  [k: string]: Instance[];
-};
 export const getCurrentMap = (
   as: string[],
   cols: number,
@@ -107,8 +111,8 @@ export const makeFindPath = (
 ) => {
   return function findPath(
     wordArr: string[],
-    matches: Set<number>,
-    visited: Set<number>,
+    matches = new Set<number>(),
+    visited = new Set<number>(),
     start?: Instance[]
   ): Set<number> | undefined {
     if (start == null) {
@@ -163,4 +167,18 @@ export const rotateGameTiles = (as: string[], dir: "cw" | "ccw"): string[] => {
   if (dir === "cw") return CWMap.map((x) => as[x] ?? "");
 
   return CCWMap.map((x) => as[x] ?? "");
+};
+// ----------------------------------------------------------------------------
+//                            Tile Frequency
+// ----------------------------------------------------------------------------
+export const findFrequency = (ts: string[], ws: number[][]) => {
+  return ts.reduce(
+    (a, _, i) => {
+      const count = ws.reduce((a, v) => a + v.filter((x) => x === i).length, 0);
+      a[i] = count;
+      a.max = count > a.max ? count : a.max;
+      return a;
+    },
+    { max: 0 } as HeatMap
+  );
 };

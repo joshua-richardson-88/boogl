@@ -50,8 +50,8 @@ type Actions = {
 };
 type Store = State & Actions;
 
-const GAME_ROWS = 4;
-const GAME_COLS = 4;
+export const GAME_ROWS = 4;
+export const GAME_COLS = 4;
 
 const initState: State = {
   diceBag: diceBag,
@@ -102,6 +102,7 @@ const useStore = create(
         const _w = tilesToWord(state.game.currentWord, state.gameBoard.tiles);
         if (_w == null) return;
         state.game.wordList.splice(0, 0, _w);
+        state.game.wordList.filter((w) => w.length > 2);
         state.game.score += calculateScore(_w);
         state.game.currentWord = [];
       });
