@@ -23,7 +23,7 @@ const Home: NextPage = () => {
       </Head>
       <Header />
 
-      <main className="mt-16 mb-8 w-full">
+      <main className="mt-16 mb-8 h-full w-full">
         {clientOnly && (
           <div className="flex flex-col items-center gap-4 pt-4">
             <Card />
