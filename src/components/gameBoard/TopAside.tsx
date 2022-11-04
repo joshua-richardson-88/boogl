@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import gameStore from "../../utils/gameStore";
 import { userStore } from "../../utils/userStore";
 
 const GameButton = () => {
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const isGameStarted = gameStore().gameStarted;
   const tiles = gameStore().gameBoard.tiles;
   const words = gameStore().game.wordList;
@@ -12,7 +13,8 @@ const GameButton = () => {
 
   const persistGame = userStore().addGame;
 
-  const handleClick = () => {
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+    buttonRef.current?.blur();
     if (isGameStarted) {
       endGame();
       persistGame("solo", tiles, words);
@@ -27,6 +29,7 @@ const GameButton = () => {
         isGameStarted ? "" : "animate-pulse "
       }rounded w-16 bg-green-700 hover:bg-green-600 active:bg-green-600`}
       onClick={handleClick}
+      ref={buttonRef}
     >
       {isGameStarted ? "End" : "Start"}
     </button>
@@ -59,6 +62,7 @@ const Timer = ({ maxTime }: TimerProps) => {
     }
     if (isGameStarted && t === -1) setT(maxTime);
     if (t === 0) {
+      console.log("2");
       endGame();
 
       persistGame("solo", tiles, words);

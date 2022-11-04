@@ -1,4 +1,5 @@
 import create from "zustand";
+import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import {
   calculateScore,
@@ -73,83 +74,136 @@ const initState: State = {
   validationUrl: new URL("https://api.dictionaryapi.dev/api/v2/entries/en"),
 };
 
-const useStore = create(
-  immer<Store>((set) => ({
-    ...initState,
-    startGame: () => {
-      set((state) => {
-        const _tiles = generateTileset(state.diceBag);
-        const _tileMap = getCurrentMap(_tiles, GAME_COLS, GAME_ROWS);
+const useStore = create<Store>()(
+  immer(
+    devtools((set) => ({
+      ...initState,
+      startGame: () => {
+        set(
+          (state) => {
+            const _tiles = generateTileset(state.diceBag);
+            const _tileMap = getCurrentMap(_tiles, GAME_COLS, GAME_ROWS);
 
-        state.gameStarted = true;
-        state.gameBoard.tileMap = _tileMap;
-        state.gameBoard.tiles = _tiles;
-        state.game = initState.game;
-      });
-    },
-    endGame: () =>
-      set((state) => {
-        state.gameStarted = false;
-        state.gameBoard = initState.gameBoard;
-      }),
-    updateGameBoardSize: (r, c) =>
-      set((state) => {
-        state.gameBoard.rows = r;
-        state.gameBoard.cols = c;
-      }),
-    addWordToList: () => {
-      set((state) => {
-        const _w = tilesToWord(state.game.currentWord, state.gameBoard.tiles);
-        if (_w == null) return;
-        state.game.wordList.splice(0, 0, _w);
-        state.game.wordList.filter((w) => w.length > 2);
-        state.game.score += calculateScore(_w);
-        state.game.currentWord = [];
-      });
-    },
-    clearWord: () => {
-      set((state) => {
-        state.game.currentWord = [];
-      });
-    },
-    addLetter: (n) => {
-      set((state) => {
-        state.game.currentWord.push(n);
-      });
-    },
-    removeLetter: (i = 0, e) => {
-      set((state) => {
-        state.game.currentWord.slice(i, e);
-      });
-    },
-    backspace: () => {
-      set((state) => {
-        state.game.currentWord = state.game.currentWord.slice(0, -1);
-      });
-    },
-    toggleIncorrectWord: (f) => {
-      set((state) => {
-        state.wasIncorrectWord = f != null ? f : !state.wasIncorrectWord;
-      });
-    },
-    toggleAlreadyFound: (f) => {
-      set((state) => {
-        state.alreadyFound = f != null ? f : !state.alreadyFound;
-      });
-    },
-    rotateTiles: (s) => {
-      set((state) => {
-        const _t = rotateGameTiles(state.gameBoard.tiles, s);
-        state.gameBoard.tiles = _t;
-        state.gameBoard.tileMap = getCurrentMap(_t, GAME_COLS, GAME_ROWS);
-      });
-    },
-    updateTouchPosition: (pos) => {
-      set((state) => {
-        state.game.pointerPosition = pos;
-      });
-    },
-  }))
+            state.gameStarted = true;
+            state.gameBoard.tileMap = _tileMap;
+            state.gameBoard.tiles = _tiles;
+            state.game = initState.game;
+          },
+          false,
+          "game/startGame"
+        );
+      },
+      endGame: () =>
+        set(
+          (state) => {
+            state.gameStarted = false;
+            state.gameBoard = initState.gameBoard;
+          },
+          false,
+          "game/endGame"
+        ),
+      updateGameBoardSize: (r, c) =>
+        set(
+          (state) => {
+            state.gameBoard.rows = r;
+            state.gameBoard.cols = c;
+          },
+          false,
+          "game/updateGameBoardSize"
+        ),
+      addWordToList: () => {
+        set(
+          (state) => {
+            const _w = tilesToWord(
+              state.game.currentWord,
+              state.gameBoard.tiles
+            );
+            if (_w == null) return;
+            state.game.wordList.splice(0, 0, _w);
+            state.game.wordList.filter((w) => w.length > 2);
+            state.game.score += calculateScore(_w);
+            state.game.currentWord = [];
+          },
+          false,
+          "game/addWordToList"
+        );
+      },
+      clearWord: () => {
+        set(
+          (state) => {
+            state.game.currentWord = [];
+          },
+          false,
+          "game/clearWord"
+        );
+      },
+      addLetter: (n) => {
+        set(
+          (state) => {
+            state.game.currentWord.push(n);
+          },
+          false,
+          "game/addLetter"
+        );
+      },
+      removeLetter: (i = 0, e) => {
+        set(
+          (state) => {
+            state.game.currentWord.slice(i, e);
+          },
+          false,
+          "game/removeLetter"
+        );
+      },
+      backspace: () => {
+        set(
+          (state) => {
+            state.game.currentWord = state.game.currentWord.slice(0, -1);
+          },
+          false,
+          "game/backspace"
+        );
+      },
+      toggleIncorrectWord: (f) => {
+        set(
+          (state) => {
+            state.wasIncorrectWord = f != null ? f : !state.wasIncorrectWord;
+          },
+          false,
+          "game/toggleIncorrectWord"
+        );
+      },
+      toggleAlreadyFound: (f) => {
+        set(
+          (state) => {
+            state.alreadyFound = f != null ? f : !state.alreadyFound;
+          },
+          false,
+          "game/toggleAlreadyFound"
+        );
+      },
+      rotateTiles: (s) => {
+        set(
+          (state) => {
+            const _t = rotateGameTiles(state.gameBoard.tiles, s);
+            state.gameBoard.tiles = _t;
+            state.gameBoard.tileMap = getCurrentMap(_t, GAME_COLS, GAME_ROWS);
+          },
+          false,
+          "game/rotateTiles"
+        );
+      },
+      updateTouchPosition: (pos) => {
+        set(
+          (state) => {
+            state.game.pointerPosition = pos;
+          },
+          false,
+          "game/updateTouchPosition"
+        );
+      },
+    }))
+  )
 );
 
 export default useStore;
