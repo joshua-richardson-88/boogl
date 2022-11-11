@@ -8,7 +8,9 @@ const Home: NextPage = () => (
   <>
     <Head>
       <title>Boogl</title>
-      <meta name="description" content="Interview Coding Sample" />
+      <meta name="description" content="A classic board game, online!" />
+      <meta property="og:url" content="boogl.cursedtale.com" />
+      <meta property="og:type" content="website" />
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <Header />

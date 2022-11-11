@@ -20,7 +20,7 @@ const MyDocument = () => (
         />
       </noscript>
     </Head>
-    <body className="dark:bg-neutral-800">
+    <body className="bg-neutral-800">
       <Main />
       <NextScript />
     </body>
