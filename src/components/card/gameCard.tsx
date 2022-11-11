@@ -6,7 +6,7 @@ const reduceScore = (as: string[]) =>
 
 const GameCard = ({ type, date, tiles, words, heatMap }: Game) => {
   return (
-    <div className="flex w-full max-w-sm flex-col gap-2 rounded-lg border border-gray-200 bg-gray-200 p-4 text-neutral-100 shadow-md dark:border-gray-700 dark:bg-gray-700">
+    <div className="flex w-full max-w-sm flex-col gap-2 rounded-lg border   border-gray-700 bg-gray-700 p-4 text-neutral-100 shadow-md">
       <div className="flex justify-between">
         <div className="flex flex-col">
           <h2 className="flex flex-1 text-4xl">{reduceScore(words)}</h2>

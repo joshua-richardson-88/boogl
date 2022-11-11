@@ -139,9 +139,7 @@ const EditableField = ({ editing, initState, update }: EditableFieldProps) => {
           />
         </form>
       ) : (
-        <h5 className="text-xl font-medium text-gray-900 dark:text-white">
-          {state}
-        </h5>
+        <h5 className="text-xl font-medium text-white">{state}</h5>
       )}
     </>
   );
@@ -199,7 +197,7 @@ const Card = () => {
   };
 
   return (
-    <div className="w-full max-w-sm rounded-lg border border-gray-200 bg-gray-200 text-neutral-100 shadow-md dark:border-gray-700 dark:bg-gray-700">
+    <div className="w-full max-w-sm rounded-lg border  border-gray-700 bg-gray-700 text-neutral-100 shadow-md">
       <ActionMenu clear={clearUser} edit={setEditMode} />
       <div className="flex flex-col gap-4 px-6 pb-10">
         <div className="flex items-center gap-4">
@@ -210,12 +208,9 @@ const Card = () => {
               initState={username}
               update={update}
             />
-            <span className="text-sm text-gray-500 dark:text-gray-400">
-              {`#${id}`}
-            </span>
+            <span className="text-sm text-gray-400">{`#${id}`}</span>
           </div>
         </div>
-        <ThemeSwitcher />
       </div>
     </div>
   );
