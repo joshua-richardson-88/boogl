@@ -7,22 +7,23 @@ import { trpc } from "../utils/trpc";
 
 // types
 import type { AppType } from "next/app";
+import { userStore } from "../utils/userStore";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
-  useEffect(() => {
-    const theme = localStorage.getItem("theme");
-    const shouldSetDarkTheme =
-      theme === "dark" ||
-      (theme == null &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches);
+  const userTheme = userStore().theme;
 
-    document.documentElement.classList.remove(
-      shouldSetDarkTheme ? "light" : "dark"
-    );
-    document.documentElement.classList.add(
-      shouldSetDarkTheme ? "dark" : "light"
-    );
-  }, []);
+  useEffect(() => {
+    const themeIsDark = userTheme === "dark";
+    const userPrefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    const isDarkMode =
+      themeIsDark || (userTheme === "system" && userPrefersDark);
+
+    console.log("is dark mode", isDarkMode);
+    document.documentElement.classList.remove(isDarkMode ? "light" : "dark");
+    document.documentElement.classList.add(isDarkMode ? "dark" : "light");
+  }, [userTheme]);
   return <Component {...pageProps} />;
 };
 

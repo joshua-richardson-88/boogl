@@ -21,9 +21,11 @@ export type Game = {
   words: string[];
   heatMap: HeatMap;
 };
+type ThemeType = "light" | "dark" | "system";
 type State = {
   username: string;
   id: string;
+  theme: ThemeType;
   games: Game[];
   maxGames: number;
 };
@@ -31,12 +33,14 @@ type Actions = {
   clearProfile: () => void;
   updateUsername: (s?: string) => void;
   addGame: (t: GameType, ts: string[], ws: string[]) => void;
+  setTheme: (t: ThemeType) => void;
 };
 type Store = State & Actions;
 
 const nanoid = customAlphabet(nolookalikesSafe, 12);
 const initState: State = {
   username: "New User",
+  theme: "system",
   id: nanoid(),
   games: [],
   maxGames: 10,
@@ -82,6 +86,11 @@ export const userStore = create(
           if (state.games.length > state.maxGames) {
             state.games.pop();
           }
+        });
+      },
+      setTheme: (t) => {
+        set((state) => {
+          state.theme = t;
         });
       },
     })),
