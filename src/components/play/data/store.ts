@@ -119,7 +119,6 @@ const gameStore = create<GameStore>()(
           (state) => {
             const _tiles = generateTileset();
             const _tileMap = getMap(_tiles);
-            console.log(_tiles);
 
             state.currentWord = [];
             state.gameStarted = true;

@@ -21,7 +21,6 @@ const TileList = ({ heatMap, tiles }: TileListProps) => (
     ))}
   </div>
 );
-``;
 
 const PlayType = ({ type }: { type: GameType }) => (
   <p className="font-bold">{type === "solo" ? "Solo Play" : "Multiplayer"}</p>

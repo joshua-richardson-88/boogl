@@ -20,7 +20,6 @@ const MyApp: AppType = ({ Component, pageProps }) => {
     const isDarkMode =
       themeIsDark || (userTheme === "system" && userPrefersDark);
 
-    console.log("is dark mode", isDarkMode);
     document.documentElement.classList.remove(isDarkMode ? "light" : "dark");
     document.documentElement.classList.add(isDarkMode ? "dark" : "light");
   }, [userTheme]);
