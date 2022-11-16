@@ -1,4 +1,4 @@
-import useStore from "../../utils/gameStore";
+import gameStore from "./data/store";
 import useKeyPress from "../../hooks/useKeyPress";
 
 const RotateCWIcon = () => (
@@ -33,9 +33,8 @@ const RotateCCWIcon = () => (
     />
   </svg>
 );
-type ButtonProps = { dir: "cw" | "ccw" };
 const RotateButton = ({ dir }: ButtonProps) => {
-  const rotate = useStore().rotateTiles;
+  const rotate = gameStore().rotateTiles;
   const keyPressed = useKeyPress(
     dir === "cw" ? "ArrowRight" : "ArrowLeft",
     () => rotate(dir)
@@ -65,3 +64,5 @@ const LeftAside = () => (
 );
 
 export default LeftAside;
+
+type ButtonProps = { dir: "cw" | "ccw" };

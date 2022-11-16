@@ -2,8 +2,9 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useCallback, useEffect, useState } from "react";
 
-import { CurrentWord, Game, WordList, TopAside, Header } from "../components";
-import useStore from "../utils/gameStore";
+import Header from "../components/header";
+import GameBoard from "../components/play";
+import gameStore from "../components/play/data/store";
 
 // eslint-disable-next-line  @typescript-eslint/no-explicit-any
 const debounce = (f: any, x: number) => {
@@ -17,7 +18,7 @@ const debounce = (f: any, x: number) => {
 
 const Home: NextPage = () => {
   const [pressed, setPressed] = useState(false);
-  const update = useStore().updateTouchPosition;
+  const update = gameStore().updateTouchPosition;
   const debounceHandler = useCallback(
     (e: PointerEvent) => {
       if (pressed) {
@@ -60,14 +61,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main className="flex min-h-screen items-center justify-center text-neutral-100">
-        <div className="flex max-w-sm flex-1 flex-col gap-6">
-          <TopAside />
-          <Game />
-          <CurrentWord />
-          <WordList />
-        </div>
-      </main>
+      <GameBoard />
     </>
   );
 };

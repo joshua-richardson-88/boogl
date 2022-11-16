@@ -1,17 +1,17 @@
-import { tilesToWord } from "../../utils/gameUtils";
-import useStore from "../../utils/gameStore";
+import gameStore from "./data/store";
+import { tilesToWord } from "./data/utils";
 import useKeyPress from "../../hooks/useKeyPress";
 
 const CurrentWord = () => {
-  const word = useStore().game.currentWord;
-  const tiles = useStore().gameBoard.tiles;
-  const wasIncorrect = useStore().wasIncorrectWord;
-  const wasFound = useStore().alreadyFound;
+  const word = gameStore().currentWord;
+  const tiles = gameStore().tiles;
+  const wasIncorrect = gameStore().wasIncorrectWord;
+  const wasFound = gameStore().alreadyFound;
 
-  const backspace = useStore().backspace;
-  const clear = useStore().clearWord;
-  const toggleIncorrect = useStore().toggleIncorrectWord;
-  const toggleAlreadyFound = useStore().toggleAlreadyFound;
+  const backspace = gameStore().backspace;
+  const clear = gameStore().clearWord;
+  const toggleIncorrect = gameStore().toggleIncorrectWord;
+  const toggleAlreadyFound = gameStore().toggleAlreadyFound;
 
   const updateAnimation = () => {
     setTimeout(() => {
@@ -19,6 +19,7 @@ const CurrentWord = () => {
       toggleAlreadyFound(false);
     }, 500);
   };
+
   useKeyPress("Backspace", backspace);
   useKeyPress("Delete", backspace);
   useKeyPress("Escape", clear);

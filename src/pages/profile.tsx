@@ -1,42 +1,20 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useEffect, useState } from "react";
 
-import { Card, Header } from "../components";
-import GameCard from "../components/card/gameCard";
-import { isSSR } from "../utils/isSSR";
-import { userStore } from "../utils/userStore";
+import Header from "../components/header";
+import Profile from "../components/profile";
 
-const Home: NextPage = () => {
-  const [clientOnly, setClientOnly] = useState(false);
-  const games = userStore().games;
-  useEffect(() => {
-    if (!isSSR) setClientOnly(true);
-  }, []);
+const Home: NextPage = () => (
+  <>
+    <Head>
+      <title>Boogl | Profile</title>
+      <meta name="description" content="Interview Coding Sample" />
+      <link rel="icon" href="/favicon.ico" />
+    </Head>
 
-  return (
-    <>
-      <Head>
-        <title>Boogl | Profile</title>
-        <meta name="description" content="Interview Coding Sample" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Header />
-
-      <main className="mt-16 mb-8 h-full w-full">
-        {clientOnly && (
-          <div className="flex flex-col items-center gap-4 pt-4">
-            <Card />
-            <div className="flex flex-col gap-2">
-              {games.map((game, i) => (
-                <GameCard key={i} {...game} />
-              ))}
-            </div>
-          </div>
-        )}
-      </main>
-    </>
-  );
-};
+    <Header />
+    <Profile />
+  </>
+);
 
 export default Home;

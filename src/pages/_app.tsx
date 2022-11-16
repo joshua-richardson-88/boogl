@@ -7,7 +7,7 @@ import { trpc } from "../utils/trpc";
 
 // types
 import type { AppType } from "next/app";
-import { userStore } from "../utils/userStore";
+import userStore from "../components/profile/data/store";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   const userTheme = userStore().theme;

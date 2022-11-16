@@ -1,23 +1,23 @@
 import { useEffect, useRef, useState, type MouseEvent } from "react";
-import gameStore from "../../utils/gameStore";
-import { userStore } from "../../utils/userStore";
+import gameStore from "./data/store";
+import userStore from "../profile/data/store";
 
 const GameButton = () => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const isGameStarted = gameStore().gameStarted;
-  const tiles = gameStore().gameBoard.tiles;
-  const words = gameStore().game.wordList;
+  const tiles = gameStore().tiles;
+  const words = gameStore().wordList;
 
   const startGame = gameStore().startGame;
   const endGame = gameStore().endGame;
 
   const persistGame = userStore().addGame;
 
-  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (_: MouseEvent<HTMLButtonElement>) => {
     buttonRef.current?.blur();
     if (isGameStarted) {
+      persistGame("solo");
       endGame();
-      persistGame("solo", tiles, words);
     } else {
       startGame();
     }
@@ -36,7 +36,7 @@ const GameButton = () => {
   );
 };
 const Score = () => {
-  const x = gameStore().game.score;
+  const x = gameStore().score;
   return (
     <div className="flex w-16 flex-col items-center">
       <p>Score</p>
@@ -49,8 +49,6 @@ const Timer = ({ maxTime }: TimerProps) => {
   const [t, setT] = useState(-1);
 
   const isGameStarted = gameStore().gameStarted;
-  const tiles = gameStore().gameBoard.tiles;
-  const words = gameStore().game.wordList;
 
   const endGame = gameStore().endGame;
   const persistGame = userStore().addGame;
@@ -62,16 +60,15 @@ const Timer = ({ maxTime }: TimerProps) => {
     }
     if (isGameStarted && t === -1) setT(maxTime);
     if (t === 0) {
-      console.log("2");
       endGame();
 
-      persistGame("solo", tiles, words);
+      persistGame("solo");
       setT(-1);
       return;
     }
     const timer = setInterval(() => setT((p) => p - 1), 1000);
     return () => clearInterval(timer);
-  }, [endGame, isGameStarted, maxTime, persistGame, t, tiles, words]);
+  }, [endGame, isGameStarted, maxTime, persistGame, t]);
 
   return (
     <div>

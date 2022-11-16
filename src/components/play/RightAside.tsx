@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import { tilesToWord } from "../../utils/gameUtils";
-import useStore from "../../utils/gameStore";
-import { trpc } from "../../utils/trpc";
+
+import gameStore from "./data/store";
+import { tilesToWord } from "./data/utils";
 import useKeyPress from "../../hooks/useKeyPress";
+import { trpc } from "../../utils/trpc";
 
 const SubmitIcon = () => (
   <div role="status">
@@ -61,7 +62,7 @@ const ClearIcon = () => (
   </svg>
 );
 const ClearButton = () => {
-  const clearCurrent = useStore().clearWord;
+  const clearCurrent = gameStore().clearWord;
   const keyPressed = useKeyPress("Escape", () => clearCurrent());
 
   return (
@@ -79,14 +80,14 @@ const ClearButton = () => {
 };
 const SubmitButton = () => {
   const [keyPressed, setKeyPressed] = useState(false);
-  const list = useStore().game.wordList;
-  const currentWord = useStore().game.currentWord;
-  const tiles = useStore().gameBoard.tiles;
+  const list = gameStore().wordList;
+  const currentWord = gameStore().currentWord;
+  const tiles = gameStore().tiles;
 
-  const clear = useStore().clearWord;
-  const addWord = useStore().addWordToList;
-  const toggleIncorrect = useStore().toggleIncorrectWord;
-  const toggleAlreadyUsed = useStore().toggleAlreadyFound;
+  const clear = gameStore().clearWord;
+  const addWord = gameStore().addWordToList;
+  const toggleIncorrect = gameStore().toggleIncorrectWord;
+  const toggleAlreadyUsed = gameStore().toggleAlreadyFound;
 
   const { isLoading, mutate } = trpc.word.isValidWord.useMutation({
     onSuccess: (isValid) => {

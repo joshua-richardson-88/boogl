@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-import { Cell, LeftAside, RightAside } from "./index";
-import { makeGetAdjacent, makeFindPath } from "../../utils/gameUtils";
-import useStore from "../../utils/gameStore";
+import Cell from "./Cell";
+import LeftAside from "./LeftAside";
+import RightAside from "./RightAside";
+import gameStore, { findPath, getAdj } from "./data/store";
 
 const keyIsLetter = (s: string) =>
   s.length === 1 && s.toLowerCase().match(/[a-z]/);
@@ -10,20 +11,13 @@ const keyIsLetter = (s: string) =>
 const GameBoard = () => {
   const [adjacentCurrent, setAdjacentCurrent] = useState<number[]>([]);
 
-  const gameStarted = useStore().gameStarted;
-  const { cols, rows } = useStore().gameBoard;
-  const currentWord = useStore().game.currentWord;
-  const tiles = useStore().gameBoard.tiles;
-  const tileMap = useStore().gameBoard.tileMap;
+  const gameStarted = gameStore().gameStarted;
+  const currentWord = gameStore().currentWord;
+  const tiles = gameStore().tiles;
+  const tileMap = gameStore().tileMap;
 
-  const addLetter = useStore().addLetter;
-  const clearWord = useStore().clearWord;
-
-  const getAdj = useMemo(() => makeGetAdjacent(cols, rows), [cols, rows]);
-  const findPath = useMemo(
-    () => makeFindPath(tileMap, getAdj),
-    [tileMap, getAdj]
-  );
+  const addLetter = gameStore().addLetter;
+  const clearWord = gameStore().clearWord;
 
   const updateAdjacent = useCallback(
     (n?: number) => {
@@ -32,10 +26,9 @@ const GameBoard = () => {
         return;
       }
 
-      const getAdj = makeGetAdjacent(cols, rows);
       setAdjacentCurrent(getAdj(currentWord[currentWord.length - 1] ?? -10));
     },
-    [cols, rows, currentWord]
+    [currentWord]
   );
   const keyToIndexes = useCallback(
     (s: string) =>
@@ -46,8 +39,8 @@ const GameBoard = () => {
   useEffect(() => {
     const word = currentWord[currentWord.length - 1];
 
-    setAdjacentCurrent(word == null ? [] : makeGetAdjacent(cols, rows)(word));
-  }, [currentWord, cols, rows, tiles]);
+    setAdjacentCurrent(word == null ? [] : getAdj(word));
+  }, [currentWord, tiles]);
 
   useEffect(() => {
     const keyDownHandler = (e: KeyboardEvent) => {
@@ -64,7 +57,10 @@ const GameBoard = () => {
         setAdjacentCurrent(getAdj(pos));
         return;
       }
-      const _path = findPath([...currentWord.map((i) => tiles[i] ?? ""), key]);
+      const _path = findPath(tileMap)([
+        ...currentWord.map((i) => tiles[i] ?? ""),
+        key,
+      ]);
       if (_path == null) return;
 
       const path = [..._path.values()].reverse();
@@ -101,6 +97,7 @@ const GameBoard = () => {
     </div>
   );
 };
+
 const Game = () => (
   <div className="flex w-full justify-evenly gap-4">
     <LeftAside />
